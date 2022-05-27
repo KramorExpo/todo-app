@@ -38,10 +38,10 @@
 
 <script>
 export default {
+  mounted() {
+      this.tasks = JSON.parse(localStorage.getItem('tasks'))
+    },
   name: 'HelloWorld',
-  props: {
-    msg: String
-  },
   data() {
     return {
       task: "Hello world",
@@ -59,6 +59,11 @@ export default {
       ]
     }
   },
+  watch: {
+   tasks: function () {
+     this.saveData()
+   }
+  },
 
   methods: {
     submitTask(){
@@ -71,6 +76,7 @@ export default {
         })
       } else {
         this.tasks[this.editedTask].name = this.task;
+        this.tasks.
         this.editedTask = null;
       }
       
@@ -91,6 +97,11 @@ export default {
         if(++newindex > 2) newindex = 0
         this.tasks[index].status = this.availableStatus[newindex]
     },
+
+    saveData(){
+      const stringTasks = JSON.stringify(this.tasks)
+      localStorage.setItem('tasks', stringTasks)
+    }
   }
 }
 </script>
